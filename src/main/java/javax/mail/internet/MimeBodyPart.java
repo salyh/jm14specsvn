@@ -355,9 +355,12 @@ public class MimeBodyPart extends BodyPart implements MimePart {
         // The Sun implementation appears to update the Content-type name parameter too, based on
         // another system property
         if (SessionUtil.getBooleanProperty(MIME_SETCONTENTTYPEFILENAME, true)) {
-            ContentType type = new ContentType(getContentType());
-            type.setParameter("name", name);
-            setHeader("Content-Type", type.toString());
+            String currentContentType = getSingleHeader("Content-Type");
+            if(currentContentType !=null) { //GERONIMO-6480
+                ContentType type = new ContentType(getContentType());
+                type.setParameter("name", name);
+                setHeader("Content-Type", type.toString());
+            }
         }
     }
 

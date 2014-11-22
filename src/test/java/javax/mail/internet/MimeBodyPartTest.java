@@ -23,10 +23,17 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLDecoder;
 
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
 import javax.mail.MessagingException;
 
+import junit.framework.Assert;
 import junit.framework.TestCase;
 
 /**
@@ -109,8 +116,9 @@ public class MimeBodyPartTest extends TestCase {
 
     public void testSetFileName() throws Exception {
         MimeBodyPart part = new MimeBodyPart();
+        part.addHeader("Content-Type", "application/octet-stream"); //GERONIMO-6480
         part.setFileName("test.dat");
-
+        
         assertEquals("test.dat", part.getFileName());
 
         ContentDisposition disp = new ContentDisposition(part.getHeader("Content-Disposition", null));
@@ -200,7 +208,7 @@ public class MimeBodyPartTest extends TestCase {
 
         compareFileData(testData, tempData);
     }
-
+    
     private byte[] getFileData(File source) throws Exception {
         FileInputStream testIn = new FileInputStream(source);
 

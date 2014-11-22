@@ -19,6 +19,7 @@
 
 package javax.mail.internet;
 
+import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import java.net.InetAddress;
@@ -440,6 +441,17 @@ public class InternetAddressTest extends TestCase {
         session = Session.getInstance(props, null);
 
         assertEquals(InternetAddress.getLocalAddress(session), new InternetAddress("tester@incubator.apache.org"));
+    }
+    
+    public void testGERONIMO5842() throws AddressException {
+        InternetAddress[] addresses = InternetAddress.parse("k..allen@apache.org");
+        Assert.assertNotNull(addresses);
+        Assert.assertEquals(1, addresses.length);
+        addresses[0].validate();
+        
+        InternetAddress.parse("k..@apache.org");
+        InternetAddress.parse("k....@apache.org");
+        InternetAddress.parse("k...allen...@apache.org");
     }
 
     private InternetAddress[] getGroup(String address, boolean strict) throws AddressException
