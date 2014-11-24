@@ -47,7 +47,7 @@ import org.apache.geronimo.mail.util.SessionUtil;
  */
 public class MimeBodyPart extends BodyPart implements MimePart {
 	 // constants for accessed properties
-    private static final String MIME_DECODEFILENAME = "mail.mime.decodefilename";
+    protected static final String MIME_DECODEFILENAME = "mail.mime.decodefilename";
     private static final String MIME_ENCODEFILENAME = "mail.mime.encodefilename";
     private static final String MIME_SETDEFAULTTEXTCHARSET = "mail.mime.setdefaulttextcharset";
     private static final String MIME_SETCONTENTTYPEFILENAME = "mail.mime.setcontenttypefilename";
